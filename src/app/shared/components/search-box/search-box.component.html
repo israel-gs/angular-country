@@ -1,0 +1,7 @@
+<input
+  type="text"
+  class="form-control"
+  #inputSearch
+  [placeholder]="placeholder"
+  (keyup.enter)="handleSearch(inputSearch.value)"
+/>

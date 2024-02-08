@@ -1,0 +1,3 @@
+GET https://restcountries.com/v3.1/capital/san
+
+GET https://restcountries.com/v3.1/capital/san?fields=name,capital
