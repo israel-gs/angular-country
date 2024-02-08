@@ -16,4 +16,16 @@ export class CountriesService {
       .get<Country[]>(`${BASE_URL}/capital/${capital}`)
       .pipe(catchError(_ => of([])))
   }
+
+  getByCountry (country: string) {
+    return this.httpClient
+      .get<Country[]>(`${BASE_URL}/name/${country}`)
+      .pipe(catchError(_ => of([])))
+  }
+
+  getByRegion (region: string) {
+    return this.httpClient
+      .get<Country[]>(`${BASE_URL}/region/${region}`)
+      .pipe(catchError(_ => of([])))
+  }
 }
