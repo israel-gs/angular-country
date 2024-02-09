@@ -3,5 +3,5 @@
   class="form-control"
   #inputSearch
   [placeholder]="placeholder"
-  (keyup.enter)="handleSearch(inputSearch.value)"
+  (keyup)="onKeyUp(inputSearch.value)"
 />
