@@ -17,7 +17,20 @@ export class CountriesService {
     byRegion: { region: '', data: [] as Country[] }
   }
 
-  constructor (private httpClient: HttpClient) {}
+  constructor (private httpClient: HttpClient) {
+    this.getFromLocalStorage()
+  }
+
+  private saveToLocalStorage () {
+    localStorage.setItem('cacheStorage', JSON.stringify(this.cacheStorage))
+  }
+
+  private getFromLocalStorage () {
+    const data = localStorage.getItem('cacheStorage')
+    if (data) {
+      this.cacheStorage = JSON.parse(data)
+    }
+  }
 
   getByAlphaCode (alphaCode: string): Observable<Country | null> {
     return this.httpClient
@@ -32,7 +45,8 @@ export class CountriesService {
     return this._getCountriesRequest(`${BASE_URL}/capital/${capital}`).pipe(
       tap(countries => {
         this.cacheStorage.byCapital = { term: capital, data: countries }
-      })
+      }),
+      tap(_ => this.saveToLocalStorage())
     )
   }
 
@@ -40,7 +54,8 @@ export class CountriesService {
     return this._getCountriesRequest(`${BASE_URL}/name/${country}`).pipe(
       tap(countries => {
         this.cacheStorage.byCountry = { term: country, data: countries }
-      })
+      }),
+      tap(_ => this.saveToLocalStorage())
     )
   }
 
@@ -48,7 +63,8 @@ export class CountriesService {
     return this._getCountriesRequest(`${BASE_URL}/region/${region}`).pipe(
       tap(countries => {
         this.cacheStorage.byRegion = { region, data: countries }
-      })
+      }),
+      tap(_ => this.saveToLocalStorage())
     )
   }
 
