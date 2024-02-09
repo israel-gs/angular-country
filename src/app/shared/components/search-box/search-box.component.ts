@@ -12,7 +12,6 @@ export class SearchBoxComponent implements OnInit {
 
   ngOnInit (): void {
     this.debouncer.pipe(debounceTime(300)).subscribe(value => {
-      console.log(value)
       this.handleSearch(value)
     })
   }
