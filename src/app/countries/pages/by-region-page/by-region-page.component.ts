@@ -1,8 +1,7 @@
 import { Component } from '@angular/core'
-import { Country } from '../../interfaces/country'
+import { Country } from '../../interfaces/country.interface'
 import { CountriesService } from '../../services/countries.service'
-
-type Region = 'Africa' | 'Americas' | 'Asia' | 'Europe' | 'Oceania'
+import { Region } from '../../interfaces/region.type'
 
 @Component({
   selector: 'app-by-region-page',
@@ -21,6 +20,11 @@ export class ByRegionPageComponent {
   public selectedRegion?: Region
 
   constructor (private countriesService: CountriesService) {}
+
+  ngOnInit (): void {
+    this._countries = this.countriesService.cacheStorage.byRegion.data
+    this.selectedRegion = this.countriesService.cacheStorage.byRegion.region
+  }
 
   get countries () {
     return this._countries
