@@ -13,6 +13,7 @@
 <div class="row mt-5">
   <div class="col-12">
     <hr />
+    <shared-loader *ngIf="isLoading"></shared-loader>
     <countries-country-table [countries]="countries"></countries-country-table>
   </div>
 </div>

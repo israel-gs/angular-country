@@ -18,6 +18,7 @@ export class ByRegionPageComponent {
     'Oceania'
   ]
   public selectedRegion?: Region
+  public isLoading = false
 
   constructor (private countriesService: CountriesService) {}
 
@@ -36,8 +37,10 @@ export class ByRegionPageComponent {
 
   handleSearch (value: Region) {
     this.selectedRegion = value
+    this.isLoading = true
     this.countriesService.getByRegion(value).subscribe(countries => {
       this._countries = countries
+      this.isLoading = false
     })
   }
 }

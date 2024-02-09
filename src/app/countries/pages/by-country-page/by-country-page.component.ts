@@ -10,6 +10,7 @@ import { CountriesService } from '../../services/countries.service'
 export class ByCountryPageComponent implements OnInit {
   private _countries: Country[] = []
   public initialTerm = ''
+  public isLoading = false
 
   constructor (private countriesService: CountriesService) {}
 
@@ -23,8 +24,10 @@ export class ByCountryPageComponent implements OnInit {
   }
 
   handleSearch (value: string) {
+    this.isLoading = true
     this.countriesService.getByCountry(value).subscribe(countries => {
       this._countries = countries
+      this.isLoading = false
     })
   }
 }
