@@ -33,9 +33,6 @@ export class CountriesService {
   }
 
   private _getCountriesRequest (url: string) {
-    return this.httpClient.get<Country[]>(url).pipe(
-      catchError(_ => of([])),
-      delay(2000)
-    )
+    return this.httpClient.get<Country[]>(url).pipe(catchError(_ => of([])))
   }
 }
