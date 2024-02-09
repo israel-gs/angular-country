@@ -9,6 +9,7 @@ import { Country } from '../../interfaces/country'
 })
 export class ByCapitalPageComponent {
   private _countries: Country[] = []
+  public isLoading = false
 
   constructor (private countriesService: CountriesService) {}
 
@@ -17,8 +18,10 @@ export class ByCapitalPageComponent {
   }
 
   handleSearch (value: string) {
+    this.isLoading = true
     this.countriesService.getByCapital(value).subscribe(countries => {
       this._countries = countries
+      this.isLoading = false
     })
   }
 }

@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
 import { Country } from '../interfaces/country'
-import { Observable, catchError, map, of } from 'rxjs'
+import { Observable, catchError, delay, map, of } from 'rxjs'
 
 const BASE_URL = 'https://restcountries.com/v3.1'
 
@@ -21,20 +21,21 @@ export class CountriesService {
   }
 
   getByCapital (capital: string) {
-    return this.httpClient
-      .get<Country[]>(`${BASE_URL}/capital/${capital}`)
-      .pipe(catchError(_ => of([])))
+    return this._getCountriesRequest(`${BASE_URL}/capital/${capital}`)
   }
 
   getByCountry (country: string) {
-    return this.httpClient
-      .get<Country[]>(`${BASE_URL}/name/${country}`)
-      .pipe(catchError(_ => of([])))
+    return this._getCountriesRequest(`${BASE_URL}/name/${country}`)
   }
 
   getByRegion (region: string) {
-    return this.httpClient
-      .get<Country[]>(`${BASE_URL}/region/${region}`)
-      .pipe(catchError(_ => of([])))
+    return this._getCountriesRequest(`${BASE_URL}/region/${region}`)
+  }
+
+  private _getCountriesRequest (url: string) {
+    return this.httpClient.get<Country[]>(url).pipe(
+      catchError(_ => of([])),
+      delay(2000)
+    )
   }
 }
