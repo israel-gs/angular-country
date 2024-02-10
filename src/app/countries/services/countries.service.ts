@@ -1,9 +1,9 @@
-import { HttpClient } from '@angular/common/http'
-import { Injectable } from '@angular/core'
-import { Country } from '../interfaces/country.interface'
-import { Observable, catchError, delay, map, of, tap } from 'rxjs'
-import { CacheStore } from '../interfaces/cashe-store.interface'
-import { Region } from '../interfaces/region.type'
+import {HttpClient} from '@angular/common/http'
+import {Injectable} from '@angular/core'
+import {Country} from '../interfaces/country.interface'
+import {Observable, catchError, delay, map, of, tap} from 'rxjs'
+import {CacheStore} from '../interfaces/cashe-store.interface'
+import {Region} from '../interfaces/region.type'
 
 const BASE_URL = 'https://restcountries.com/v3.1'
 
@@ -12,27 +12,27 @@ const BASE_URL = 'https://restcountries.com/v3.1'
 })
 export class CountriesService {
   public cacheStorage: CacheStore = {
-    byCapital: { term: '', data: [] as Country[] },
-    byCountry: { term: '', data: [] as Country[] },
-    byRegion: { region: '', data: [] as Country[] }
+    byCapital: {term: '', data: [] as Country[]},
+    byCountry: {term: '', data: [] as Country[]},
+    byRegion: {region: '', data: [] as Country[]}
   }
 
-  constructor (private httpClient: HttpClient) {
+  constructor(private httpClient: HttpClient) {
     this.getFromLocalStorage()
   }
 
-  private saveToLocalStorage () {
+  private saveToLocalStorage() {
     localStorage.setItem('cacheStorage', JSON.stringify(this.cacheStorage))
   }
 
-  private getFromLocalStorage () {
+  private getFromLocalStorage() {
     const data = localStorage.getItem('cacheStorage')
     if (data) {
       this.cacheStorage = JSON.parse(data)
     }
   }
 
-  getByAlphaCode (alphaCode: string): Observable<Country | null> {
+  getByAlphaCode(alphaCode: string): Observable<Country | null> {
     return this.httpClient
       .get<Country[]>(`${BASE_URL}/alpha/${alphaCode}`)
       .pipe(
@@ -41,34 +41,34 @@ export class CountriesService {
       )
   }
 
-  getByCapital (capital: string) {
+  getByCapital(capital: string) {
     return this._getCountriesRequest(`${BASE_URL}/capital/${capital}`).pipe(
       tap(countries => {
-        this.cacheStorage.byCapital = { term: capital, data: countries }
+        this.cacheStorage.byCapital = {term: capital, data: countries}
       }),
       tap(_ => this.saveToLocalStorage())
     )
   }
 
-  getByCountry (country: string) {
+  getByCountry(country: string) {
     return this._getCountriesRequest(`${BASE_URL}/name/${country}`).pipe(
       tap(countries => {
-        this.cacheStorage.byCountry = { term: country, data: countries }
+        this.cacheStorage.byCountry = {term: country, data: countries}
       }),
       tap(_ => this.saveToLocalStorage())
     )
   }
 
-  getByRegion (region: Region) {
+  getByRegion(region: Region) {
     return this._getCountriesRequest(`${BASE_URL}/region/${region}`).pipe(
       tap(countries => {
-        this.cacheStorage.byRegion = { region, data: countries }
+        this.cacheStorage.byRegion = {region, data: countries}
       }),
       tap(_ => this.saveToLocalStorage())
     )
   }
 
-  private _getCountriesRequest (url: string) {
+  private _getCountriesRequest(url: string) {
     return this.httpClient.get<Country[]>(url).pipe(catchError(_ => of([])))
   }
 }

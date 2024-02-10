@@ -4,37 +4,37 @@
 
 <table class="table table-hover" *ngIf="countries.length > 0">
   <thead>
-    <tr>
-      <th>#</th>
-      <th>Icon</th>
-      <th>Bandera</th>
-      <th>Nombre</th>
-      <th>Capital</th>
-      <th>Poblacion</th>
-      <th></th>
-    </tr>
+  <tr>
+    <th>#</th>
+    <th>Icon</th>
+    <th>Bandera</th>
+    <th>Nombre</th>
+    <th>Capital</th>
+    <th>Poblacion</th>
+    <th></th>
+  </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let country of countries; let index = index">
-      <th scope="row">{{ index + 1 }}</th>
-      <td>
-        {{ country.flag }}
-      </td>
-      <td>
-        <img
-          [src]="country.flags.svg"
-          alt="{{ country.name.common }}"
-          style="width: 50px"
-        />
-      </td>
-      <td>{{ country.name.common }}</td>
-      <td>{{ country.capital }}</td>
-      <td>
-        {{ country.population | number : "1.0-0" }}
-      </td>
-      <td>
-        <a [routerLink]="['/countries/by', country.cca3]">Ver mas</a>
-      </td>
-    </tr>
+  <tr *ngFor="let country of countries; let index = index">
+    <th scope="row">{{ index + 1 }}</th>
+    <td>
+      {{ country.flag }}
+    </td>
+    <td>
+      <img
+        [src]="country.flags.svg"
+        alt="{{ country.name.common }}"
+        style="width: 50px"
+      />
+    </td>
+    <td>{{ country.name.common }}</td>
+    <td>{{ country.capital }}</td>
+    <td>
+      {{ country.population | number : "1.0-0" }}
+    </td>
+    <td>
+      <a [routerLink]="['/countries/by', country.cca3]">Ver mas</a>
+    </td>
+  </tr>
   </tbody>
 </table>

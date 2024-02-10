@@ -6,7 +6,7 @@ import {
   OnInit,
   Output
 } from '@angular/core'
-import { Subject, Subscription, debounceTime } from 'rxjs'
+import {Subject, Subscription, debounceTime} from 'rxjs'
 
 @Component({
   selector: 'shared-search-box',
@@ -19,7 +19,7 @@ export class SearchBoxComponent implements OnInit, OnDestroy {
   private debouncer: Subject<string> = new Subject()
   private debouncerSubscription?: Subscription
 
-  ngOnInit (): void {
+  ngOnInit(): void {
     this.debouncerSubscription = this.debouncer
       .pipe(debounceTime(300))
       .subscribe(value => {
@@ -27,15 +27,15 @@ export class SearchBoxComponent implements OnInit, OnDestroy {
       })
   }
 
-  ngOnDestroy (): void {
+  ngOnDestroy(): void {
     this.debouncerSubscription?.unsubscribe()
   }
 
-  onKeyUp (value: string): void {
+  onKeyUp(value: string): void {
     this.debouncer.next(value)
   }
 
-  handleSearch (value: string): void {
+  handleSearch(value: string): void {
     this.onSearch.emit(value)
   }
 }

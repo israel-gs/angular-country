@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core'
-import { ActivatedRoute, Router } from '@angular/router'
-import { CountriesService } from '../../services/countries.service'
-import { Country } from '../../interfaces/country.interface'
-import { switchMap } from 'rxjs'
+import {Component, OnInit} from '@angular/core'
+import {ActivatedRoute, Router} from '@angular/router'
+import {CountriesService} from '../../services/countries.service'
+import {Country} from '../../interfaces/country.interface'
+import {switchMap} from 'rxjs'
 
 @Component({
   selector: 'app-country-page',
@@ -12,24 +12,25 @@ import { switchMap } from 'rxjs'
 export class CountryPageComponent implements OnInit {
   private _country: Country | null = null
 
-  constructor (
+  constructor(
     private activatedRoute: ActivatedRoute,
     private countriesService: CountriesService,
     private router: Router
-  ) {}
+  ) {
+  }
 
-  get country (): Country | null {
+  get country(): Country | null {
     return this._country
   }
 
-  get translationsCode () {
+  get translationsCode() {
     if (!this._country) return []
     return Object.keys(this._country.translations)
   }
 
-  ngOnInit (): void {
+  ngOnInit(): void {
     this.activatedRoute.params
-      .pipe(switchMap(({ id }) => this.countriesService.getByAlphaCode(id)))
+      .pipe(switchMap(({id}) => this.countriesService.getByAlphaCode(id)))
       .subscribe(country => {
         if (!country) {
           this.router.navigate([''])

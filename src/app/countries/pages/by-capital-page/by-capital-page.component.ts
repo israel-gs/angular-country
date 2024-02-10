@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core'
-import { CountriesService } from '../../services/countries.service'
-import { Country } from '../../interfaces/country.interface'
+import {Component, OnInit} from '@angular/core'
+import {CountriesService} from '../../services/countries.service'
+import {Country} from '../../interfaces/country.interface'
 
 @Component({
   selector: 'app-by-capital-page',
@@ -12,18 +12,19 @@ export class ByCapitalPageComponent implements OnInit {
   public isLoading = false
   public initialTerm = ''
 
-  constructor (private countriesService: CountriesService) {}
+  constructor(private countriesService: CountriesService) {
+  }
 
-  ngOnInit (): void {
+  ngOnInit(): void {
     this._countries = this.countriesService.cacheStorage.byCapital.data
     this.initialTerm = this.countriesService.cacheStorage.byCapital.term
   }
 
-  get countries () {
+  get countries() {
     return this._countries
   }
 
-  handleSearch (value: string) {
+  handleSearch(value: string) {
     this.isLoading = true
     this.countriesService.getByCapital(value).subscribe(countries => {
       this._countries = countries
